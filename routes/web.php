@@ -27,10 +27,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', [HomeController::class, 'home']);
-	Route::get('dashboard', function () {
-		return view('dashboard');
-	})->name('dashboard');
+    Route::get('/dashboard', [HomeController::class, 'home'])->name('dashboard');
+	// Route::get('dashboard', function () {
+	// 	return view('dashboard');
+	// })->name('dashboard');
 
 
 	/// Fuel Routes
@@ -118,5 +118,6 @@ Route::get('/get-city-name', [GoogleMapsController::class, 'getCityName']);
 Route::post('/send-email', [EmailController::class, 'sendEmail']);
 //Delete Fuel
 Route::delete('/delete_fuel/{id}', [FuelController::class, 'destroy'])->name('fuel.delete');
+Route::put('/update_fuel/{id}', [FuelController::class, 'update_fuel'])->name('update_fuel');
 //Delete VehicleData
 Route::delete('/delete_vehicle/{id}', [vehicleController::class, 'destroy'])->name('fuel.delete');

@@ -50,4 +50,8 @@ class vehicleController extends Controller
   
           return response()->json(['message' => 'Fuel record deleted successfully']);
       }
+    //   public function countVehicle(){
+    //     $itemCount = vehiclemodel::count(); // Get the count of items from your model
+    // return view('your_blade_view', compact('itemCount'));
+    //   }
 }

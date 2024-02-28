@@ -45,4 +45,14 @@ class FuelController extends Controller
   
           return response()->json(['message' => 'Fuel record deleted successfully']);
       }
+      public function update_fuel(Request $request){
+        $fuel = fuelmodel::findOrFail($request->edit_fuel_id);
+        $fuel->update([
+            'fuel_name' => $request->edit_fuel_name,
+            'fuel_price' => $request->edit_fuel_price,
+            'fuel_unit' => $request->edit_fuel_unit,
+        ]);
+    
+        return redirect()->back()->with('success', 'Fuel updated successfully');
+      }
 }

@@ -7,7 +7,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
- 
+
             <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -86,11 +86,6 @@
         </div>
 
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -132,7 +127,7 @@ function displayFuelData(VehicleData) {
 
     $('#fuelDataTable tbody').empty();
 
-   
+
     $.each(VehicleData, function (index, fuel) {
         var deleteButton = '<button class="btn btn-danger btn-sm delete-fuel" data-id="' + fuel.id + '">Delete</button>';
         // var editButton = '<button class="btn btn-primary btn-sm edit-fuel" data-id="' + fuel.id + '" data-name="' + fuel.fuel_name + '" data-price="' + fuel.fuel_price + '" data-unit="' + fuel.fuel_unit + '" data-toggle="modal" data-target="#editFuelModal">Edit</button>';
@@ -157,14 +152,14 @@ function deletevehicle(fuelId) {
         url: '/delete_vehicle/' + fuelId,
         type: 'DELETE',
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (response) {
             fetchVehicleData();
         },
         error: function (xhr, status, error) {
             console.error(xhr.responseText);
-            
+
         }
     });
 }

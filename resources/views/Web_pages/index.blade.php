@@ -69,9 +69,11 @@
                                     <label for="vehicle">MPG of Vehicle</label>
                                     <!-- <input type="text" class="form-control btn-block" id="delivery_address" name="delivery_address" placeholder="Enter Name"> -->
                                     <select required class="form-control" name="vehicle">
-                                        <option selected>Select a vehicle</option>
-                                        <option value="49.9">Bettle (49.9m)</option>
-                                        <option value="20.0">Cyber Truck (20.0m)</option>
+                                        <option selected value="">Select a vehicle</option>
+                                        @foreach(\App\Models\Admin\vehiclemodel::all() as $vehicle)
+                                            <option value="{{$vehicle->vehicle_mileage}}"> {{$vehicle->vehicle_name}} </option>
+                                        @endforeach
+{{--                                        <option value="20.0">Cyber Truck (20.0m)</option>--}}
                                     </select>
                                 </div>
                             </div>
@@ -81,10 +83,12 @@
                                     <!-- <input type="text" class="form-control btn-block" id="delivery_address" name="delivery_address" placeholder="Enter Name"> -->
                                     <select required class="form-control" name="fuel_rate">
                                         <option value="" selected disabled>Select fuel rate</option>
-                                        <option value="6.7599">Diesel 6.7/gal</option>
-                                        <option value="6.3535">Unleaded 6.3/gal</option>
-                                        <option value="6.9902">Super Unleaded 6.9/gal</option>
-                                        <option value="7.5505">Premium Diesel 7.5/gal</option>
+                                        @foreach(\App\Models\Admin\fuelmodel::all() as $fuel)
+                                            <option value="{{$fuel->fuel_price}}">{{$fuel->fuel_name}}</option>
+                                        @endforeach
+{{--                                        <option value="6.3535">Unleaded 6.3/gal</option>--}}
+{{--                                        <option value="6.9902">Super Unleaded 6.9/gal</option>--}}
+{{--                                        <option value="7.5505">Premium Diesel 7.5/gal</option>--}}
                                     </select>
                                 </div>
                             </div>
@@ -100,10 +104,12 @@
                                     <label for="delivery_location">Delivery region</label>
                                     <select required class="form-control" name="deliveryRegionCost">
                                         <option value="" selected disabled>Select region</option>
-                                        <option value="2.99">london </option>
-                                        <option value="7.99">inside M25</option>
-                                        <option value="8.99">Outside M25</option>
-                                        <option value="82.34">European Delivery</option>
+                                        @foreach(\App\Models\Admin\DeliveryRegion::all() as $region)
+                                            <option value="{{$region->one_off_fee}}">{{$region->region}}</option>
+                                        @endforeach
+{{--                                        <option value="7.99">inside M25</option>--}}
+{{--                                        <option value="8.99">Outside M25</option>--}}
+{{--                                        <option value="82.34">European Delivery</option>--}}
                                     </select>
                                 </div>
                             </div>
@@ -114,6 +120,24 @@
                                         name="one_off_fee" placeholder="£7.99">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="oneOffFee">No of Items</label>
+                                    <select class="form-control" name="no_of_items">
+                                        <option selected value="">Select no of items</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" name="total_distance">
+                            <input type="hidden" name="region_name">
+                            <input type="hidden" name="fuel_name">
+                            <input type="hidden" name="vehicle_name">
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <p id="totalCal" name="totalCal"></p>
@@ -532,17 +556,36 @@
 
         $(document).ready(function() {
 
+            $('select[name="vehicle"]').on('change', function() {
+
+                const vehicleName = $('select[name="vehicle"] option:selected').text();
+
+                $('input[name=vehicle_name]').val(vehicleName);
+
+            });
+
+            $('select[name="fuel_rate"]').on('change', function() {
+
+                const fuelName = $('select[name="fuel_rate"] option:selected').text();
+
+                $('input[name=fuel_name]').val(fuelName);
+
+            });
+
             $('select[name="deliveryRegionCost"]').on('change', function() {
+
+                const regionName = $('select[name="deliveryRegionCost"] option:selected').text();
 
                 const oneOffFee = $(this).val();
 
-                $('input[name=one_off_fee]').val(oneOffFee);
+                $('input[name=region_name]').val(regionName);
 
+                $('input[name=one_off_fee]').val(oneOffFee);
 
             });
 
             // Function to calculate total cost
-            function calculateTotalCost(distanceMiles, vehicleMPG, fuelRate, deliveryRegionCost) {
+            function calculateTotalCost(distanceMiles, vehicleMPG, fuelRate, deliveryRegionCost, noOfItems) {
                 // Convert distance from string to float
                 console.log('Invalid distance:', distanceMiles);
                 // distance =  101.88;
@@ -580,7 +623,7 @@
                 // Calculate fuel cost
 
                 // Calculate total cost including delivery region
-                var totalCost = fuelConsumption + parseFloat(deliveryRegionCost);
+                var totalCost = fuelConsumption + parseFloat(deliveryRegionCost) + noOfItems;
                 console.log('fuel totalCost: ', totalCost);
 
                 return totalCost.toFixed(2); // Round to 2 decimal places
@@ -610,26 +653,35 @@
                 var deliveryRegionCost = parseFloat($('select[name="deliveryRegionCost"]').val());
                 var collectionCity = $('#collection-input').val();
                 var deliveryCity = $('#delivery-input').val();
-
+                const noOfItems = $('select[name=no_of_items]').val();
                 // Calculate total cost
-                var totalCost = calculateTotalCost(distance, vehicleMPG, fuelRate, deliveryRegionCost);
+                var totalCost = calculateTotalCost(
+                    distance,
+                    vehicleMPG,
+                    fuelRate,
+                    deliveryRegionCost,
+                    ( parseInt(noOfItems)  * 8.99)
+                );
                 console.log('Total cost:', totalCost); // Log total cost
 
                 // Display total cost
                 $('#totalCal').text('Total Cost: £' + totalCost);
-                // Display total cost
-                $('#totalCal').text('Total Cost: £' + totalCost);
+
                 // Prepare quote details HTML
                 var quoteDetailsHTML = `
                     <p><span style="font-weight:bold">Collection Address:</span> <label> ${collectionCity}</span></p>
                     <p><span style="font-weight:bold">Delivery Address:</span> <label id="deliveryCity">${deliveryCity}</span></p>
-                    <p > <span style="font-weight:bold"> Distance:</span> ${distance} miles</p>
+                    <p > <span style="font-weight:bold"> Distance:</span>  <span id="total-distance"> ${distance}</span> miles</p>
                     <p > <span style="font-weight:bold"> Vehicle MPG:</span> ${vehicleMPG}</p>
                     <p > <span style="font-weight:bold"> Fuel Rate:</span> ${fuelRate}</p>
                     <p > <span style="font-weight:bold"> Delivery Region Cost:</span> ${deliveryRegionCost}</p>
+                    <p > <span style="font-weight:bold"> Number of Items:</span> ${noOfItems}</p>
                     <p > <span style="font-weight:bold"> Total Cost:</span> ${totalCost}</p>
                 `;
 
+                // no_of_items
+
+                $('input[name=total_distance]').val(distance);
                 // Insert quote details HTML into modal body
                 $('#quoteDetails').html(quoteDetailsHTML);
 
@@ -715,7 +767,6 @@
 
                 // Serialize form data
                 var formData = $('#city-form').serialize();
-
                 // Send AJAX request
                 $.ajax({
                     type: 'POST',

@@ -99,6 +99,7 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'admin.'
     ],function (){
         Route::resource('delivery-regions','DeliveryRegionController');
+        Route::get('delivery-requests','DeliveryRequestController@index');
     });
 });
 

@@ -42,10 +42,6 @@
                 <small class="text-muted">Forgot you password? Reset you password
                   <a href="/login/forgot-password" class="text-info text-gradient font-weight-bold">here</a>
                 </small>
-                  <p class="mb-4 text-sm mx-auto">
-                    Don't have an account?
-                    <a href="register" class="text-info text-gradient font-weight-bold">Sign up</a>
-                  </p>
                 </div>
               </div>
             </div>

@@ -58,6 +58,15 @@
         </a>
     </li>
 
+        <li class="nav-item pb-2">
+            <a class="nav-link {{ (Request::is('delivery-requests') ? 'active' : '') }}" href="{{ url('delivery-requests') }}">
+                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('delivery-requests') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+                </div>
+                <span class="nav-link-text ms-1">Delivery Requests</span>
+            </a>
+        </li>
+
 
 
     </ul>

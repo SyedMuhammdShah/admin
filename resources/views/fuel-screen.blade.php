@@ -95,10 +95,6 @@
     <!-- End of Content Wrapper -->
     </div>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
     <!-- Edit Fuel Modal -->
     <div class="modal fade" id="editFuelModal" tabindex="-1" role="dialog" aria-labelledby="editFuelModalLabel"
         aria-hidden="true">

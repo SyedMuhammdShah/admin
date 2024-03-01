@@ -11,8 +11,8 @@
         }
     </style>
 
-<div class="site-blocks-cover overlay" id="home" style="background-image: url('{{ asset('images/hero_bg_1.jpg') }}');" data-aos="fade"
-        data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay" id="home" style="background-image: url('{{ asset('images/hero_bg_1.jpg') }}');"
+        data-aos="fade" data-stellar-background-ratio="0.5">
         <div class="container">
             <div class="row align-items-center justify-content-center text-center">
 
@@ -43,7 +43,7 @@
             <div class="col-md-8">
                 <div class="free-quote bg-dark h-100">
                     <h2 class="my-4 heading  text-center">CALCULATE YOUR DELIVERY COST</h2>
-                    <form method="post" id="city-form">
+                    <form method="POST" id="city-form">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -59,7 +59,7 @@
                                         name="delivery_address" placeholder="St paul cathedral">
                                 </div>
                             </div>
-                            <div class="col-md-12" id="distance-result">
+                            <div class="col-md-12" id="distance-result" name="distance-result">
                                 {{-- <label style="color:white; text-decoration:italic">
                                     The distance between the addresses is <b> 253 miles</b>
                                 </label> --}}
@@ -116,7 +116,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <p id="totalCal"></p>
+                                    <p id="totalCal" name="totalCal"></p>
                                 </div>
                             </div>
                         </div>
@@ -413,13 +413,14 @@
         </div>
     </div>
     <!-- Add this div for the modal -->
-    <div class="modal show fadein fade-in" id="quoteModal" tabindex="-1" role="dialog" aria-labelledby="quoteModalLabel"
-        aria-hidden="true">
+    <div class="modal show fadein fade-in" id="quoteModal" tabindex="-1" role="dialog"
+        aria-labelledby="quoteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title text-center" id="quoteModalLabel">Your Quote Details</h5>
-                    <button type="button" class="close text-white" id="close-model" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close text-white" id="close-model" data-dismiss="modal"
+                        aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -435,10 +436,11 @@
                     </button>
 
                     <button type="submit" class="btn btn-primary text-white" id="submit-request">
-                            Submit Request
-                        <div class="spinner-border spinner-border-sm d-none" id="submit-request-btn-spinner" role="status">
+                        Submit Request
+                        <div class="spinner-border spinner-border-sm d-none" id="submit-request-btn-spinner"
+                            role="status">
                             <span class="sr-only">Loading...</span>
-                          </div>
+                        </div>
                     </button>
                     {{-- <button type="button" class="btn btn-primary"  id="quoteModalSubmitButton" data-dismiss="modal">Submit</button> --}}
 
@@ -638,7 +640,7 @@
         });
 
 
-        $('#submit-request').on('click',function(){
+        $('#submit-request').on('click', function() {
 
             var formData = $('#city-form').serialize();
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -652,7 +654,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                beforeSend:function(){
+                beforeSend: function() {
 
                     $clickedButtonDom.addClass('disabled');
                     $('#submit-request-btn-spinner').removeClass('d-none');
@@ -705,8 +707,35 @@
                 });
             });
         });
+
+        // Save Quation
+        $(document).ready(function() {
+            $('#submit-request').click(function(e) {
+                e.preventDefault();
+
+                // Serialize form data
+                var formData = $('#city-form').serialize();
+
+                // Send AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/calc_deli_cost',
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $('#quoteModal').modal('hide');
+                        // Handle success action, like showing a success message
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText, error);
+                        // Handle error action, like showing an error message
+                    }
+                });
+            });
+        });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 @endsection
-

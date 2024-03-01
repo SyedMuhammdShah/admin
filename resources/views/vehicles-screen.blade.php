@@ -131,11 +131,12 @@ function displayFuelData(VehicleData) {
    
     $.each(VehicleData, function (index, fuel) {
         var deleteButton = '<button class="btn btn-danger btn-sm delete-fuel" data-id="' + fuel.id + '">Delete</button>';
+         var editButton = '<button class="btn btn-primary btn-sm edit-fuel" data-id="' + fuel.id + '" data-name="' + fuel.fuel_name + '" data-price="' + fuel.fuel_price + '" data-unit="' + fuel.fuel_unit + '" data-toggle="modal" data-target="#editFuelModal">Edit</button>';
         $('#fuelDataTable tbody').append(
             '<tr>' +
             '<td>' + fuel.vehicle_name + '</td>' +
             '<td>' + fuel.vehicle_mileage + '</td>' +
-            '<td>' + deleteButton + '</td>' +
+            '<td>' + editButton + ' ' + deleteButton + '</td>' +
             '</tr>'
         );
     });

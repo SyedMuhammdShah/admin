@@ -111,7 +111,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="editFuelForm" method="POST" action="{{ route('update_fuel', ['id' => $fuelId->id]) }}">
+                    {{-- <form id="editFuelForm" method="POST" action="{{ route('update_fuel', ['id' => $fuelId->id]) }}">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -130,7 +130,7 @@
                             </select>
                         </div>
                         <input type="hidden" id="edit_fuel_id" name="edit_fuel_id">
-                    </form>
+                    </form> --}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -11,6 +11,7 @@ use App\Http\Controllers\dashboard\vehicleController;
 use App\Http\Controllers\Email\EmailController;
 use App\Http\Controllers\Google_Api\GoogleMapsController;
 use App\Http\Controllers\Web_pages\WebHomeController;
+use App\Http\Controllers\Web_pages\Calculate_Delivery_Cost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -85,6 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/add_fuel',[FuelController::class,'Fuel_store']);
 	Route::get('/get_fuel',[FuelController::class,'getFuelData']);
 
+
 	Route::post('/add_vehicles',[vehicleController::class,'Vehicles_store']);
 	Route::get('/getVehicleData',[vehicleController::class,'GetVehicleData']);
 
@@ -121,3 +123,7 @@ Route::delete('/delete_fuel/{id}', [FuelController::class, 'destroy'])->name('fu
 Route::put('/update_fuel/{id}', [FuelController::class, 'update_fuel'])->name('update_fuel');
 //Delete VehicleData
 Route::delete('/delete_vehicle/{id}', [vehicleController::class, 'destroy'])->name('fuel.delete');
+// Calculate Deliviry cost
+
+
+Route::post('/calc_deli_cost',[Calculate_Delivery_Cost::class,'DeliveryCalculation']);

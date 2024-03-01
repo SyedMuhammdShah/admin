@@ -141,112 +141,115 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        function updateFuel() {
-    var fuelId = $('#edit_fuel_id').val();
-    var fuelName = $('#edit_fuel_name').val();
-    var fuelPrice = $('#edit_fuel_price').val();
-    var fuelUnit = $('#edit_fuel_unit').val();
+@endsection
+@section('script')
+<script>
+    function updateFuel() {
+        var fuelId = $('#edit_fuel_id').val();
+        var fuelName = $('#edit_fuel_name').val();
+        var fuelPrice = $('#edit_fuel_price').val();
+        var fuelUnit = $('#edit_fuel_unit').val();
 
-    $.ajax({
-        url: '/update_fuel/' + fuelId,
-        type: 'PUT',
-        headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-        data: {
-            fuel_name: fuelName,
-            fuel_price: fuelPrice,
-            fuel_unit: fuelUnit,
-            _token: $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (response) {
-            // Update the data in the table row
-            var row = $('#fuelDataTable tbody').find('tr[data-id="' + fuelId + '"]');
-            row.find('td:eq(0)').text(fuelName);
-            row.find('td:eq(1)').text(fuelPrice);
-            row.find('td:eq(2)').text(fuelUnit);
+        $.ajax({
+            url: '/update_fuel/' + fuelId,
+            type: 'PUT',
+            headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+            data: {
+                fuel_name: fuelName,
+                fuel_price: fuelPrice,
+                fuel_unit: fuelUnit,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                // Update the data in the table row
+                var row = $('#fuelDataTable tbody').find('tr[data-id="' + fuelId + '"]');
+                row.find('td:eq(0)').text(fuelName);
+                row.find('td:eq(1)').text(fuelPrice);
+                row.find('td:eq(2)').text(fuelUnit);
 
-            // Close the modal
-            $('#editFuelModal').modal('hide');
-        },
-        error: function (xhr, status, error) {
-            console.error(xhr.responseText);
+                // Close the modal
+                $('#editFuelModal').modal('hide');
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
         }
+    $(document).ready(function() {
+        $.ajax({
+            url: "/get_fuel",
+            type: 'GET',
+            success: function(response) {
+                var fuelData = response.fuelData;
+                displayFuelData(fuelData);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     });
-}
-        $(document).ready(function() {
-            $.ajax({
-                url: "/get_fuel",
-                type: 'GET',
-                success: function(response) {
-                    var fuelData = response.fuelData;
-                    displayFuelData(fuelData);
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+
+    function displayFuelData(fuelData) {
+
+        $('#fuelDataTable tbody').empty();
+
+
+        $.each(fuelData, function(index, fuel) {
+            var deleteButton = `<button id="${fuel.id}" class="btn btn-danger btn-sm delete-fuel" data-id="${fuel.id}">Delete</button>`;
+            // var editButton = '<button class="btn btn-primary btn-sm edit-fuel" data-id="' + fuel.id + '" data-name="' + fuel.fuel_name + '" data-price="' + fuel.fuel_price + '" data-unit="' + fuel.fuel_unit + '" data-toggle="modal" data-target="#editFuelModal">Edit</button>';
+            var editButton =
+                '<button type="button" class="btn btn-primary edit-fuel" data-toggle="modal" data-id="' + fuel
+                .id + '" data-name="' + fuel.fuel_name + '" data-price="' + fuel.fuel_price + '" data-unit="' +
+                fuel.fuel_unit + '" data-target="#exampleModal">Edit</button>';
+            $('#fuelDataTable tbody').append(
+                '<tr>' +
+                '<td>' + fuel.fuel_name + '</td>' +
+                '<td>' + fuel.fuel_price + '</td>' +
+                '<td>' + fuel.fuel_unit + '</td>' +
+                '<td>' + editButton + ' ' + deleteButton + '</td>' +
+                '</tr>'
+            );
+        });
+        // Bind click event to the edit button
+        $('.edit-fuel').click(function() {
+            var fuelId = $(this).data('id');
+            var fuelName = $(this).data('name');
+            var fuelPrice = $(this).data('price');
+            var fuelUnit = $(this).data('unit');
+
+            $('#edit_fuel_id').val(fuelId);
+            $('#edit_fuel_name').val(fuelName);
+            $('#edit_fuel_price').val(fuelPrice);
+            $('#edit_fuel_unit').val(fuelUnit);
+            $('#editFuelModal').modal('show');
         });
 
-        function displayFuelData(fuelData) {
+        // Bind click event to the delete button
+        $('.delete-fuel').click(function() {
+            var fuelId = $(this).data('id');
+            deleteFuel(fuelId);
+        });
+    }
 
-            $('#fuelDataTable tbody').empty();
+    function deleteFuel(fuelId) {
+        $.ajax({
+            url: '/delete_fuel/' + fuelId,
+            type: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                $(`#${fuelId}`).parent().parent().remove();
+                toastr.success('Fuel deleted successfully.');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                toastr.error('Something went wrong');
 
-
-            $.each(fuelData, function(index, fuel) {
-                var deleteButton = '<button class="btn btn-danger btn-sm delete-fuel" data-id="' + fuel.id +
-                    '">Delete</button>';
-                // var editButton = '<button class="btn btn-primary btn-sm edit-fuel" data-id="' + fuel.id + '" data-name="' + fuel.fuel_name + '" data-price="' + fuel.fuel_price + '" data-unit="' + fuel.fuel_unit + '" data-toggle="modal" data-target="#editFuelModal">Edit</button>';
-                var editButton =
-                    '<button type="button" class="btn btn-primary edit-fuel" data-toggle="modal" data-id="' + fuel
-                    .id + '" data-name="' + fuel.fuel_name + '" data-price="' + fuel.fuel_price + '" data-unit="' +
-                    fuel.fuel_unit + '" data-target="#exampleModal">Edit</button>';
-                $('#fuelDataTable tbody').append(
-                    '<tr>' +
-                    '<td>' + fuel.fuel_name + '</td>' +
-                    '<td>' + fuel.fuel_price + '</td>' +
-                    '<td>' + fuel.fuel_unit + '</td>' +
-                    '<td>' + editButton + ' ' + deleteButton + '</td>' +
-                    '</tr>'
-                );
-            });
-            // Bind click event to the edit button
-            $('.edit-fuel').click(function() {
-                var fuelId = $(this).data('id');
-                var fuelName = $(this).data('name');
-                var fuelPrice = $(this).data('price');
-                var fuelUnit = $(this).data('unit');
-
-                $('#edit_fuel_id').val(fuelId);
-                $('#edit_fuel_name').val(fuelName);
-                $('#edit_fuel_price').val(fuelPrice);
-                $('#edit_fuel_unit').val(fuelUnit);
-                $('#editFuelModal').modal('show');
-            });
-
-            // Bind click event to the delete button
-            $('.delete-fuel').click(function() {
-                var fuelId = $(this).data('id');
-                deleteFuel(fuelId);
-            });
-        }
-
-        function deleteFuel(fuelId) {
-            $.ajax({
-                url: '/delete_fuel/' + fuelId,
-                type: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    $('#fuelDataTable tbody').find('tr[data-id="' + fuelId + '"]').remove();
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-
-                }
-            });
-        }
-    </script>
+            }
+        });
+    }
+</script>
 @endsection

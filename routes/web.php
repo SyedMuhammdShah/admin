@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('fuel-screen');
 
 	/// vehicles Routes
-	Route::get('vehicles-screen', function () {	
+	Route::get('vehicles-screen', function () {
 		return view('vehicles-screen');
 	})->name('vehicles-screen');
 
@@ -91,8 +91,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/getVehicleData',[vehicleController::class,'GetVehicleData']);
 
     Route::get('/login', function () {
-		return view('dashboard');
+        return view('dashboard');
 	})->name('sign-up');
+
+    Route::group([
+        'namespace' => 'App\Http\Controllers\dashboard',
+        'as' => 'admin.'
+    ],function (){
+        Route::resource('delivery-regions','DeliveryRegionController');
+    });
 });
 
 
@@ -110,7 +117,10 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::get('/login', function () {
-    return view('session/login-session');
+    if(is_null(auth()->user())){
+        return view('session/login-session');
+    }
+    return redirect(route('dashboard')) ;
 })->name('login');
 
 Route::get('/',[WebHomeController::class,'index']);

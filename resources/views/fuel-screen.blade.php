@@ -208,7 +208,8 @@
                 '<td>' + fuel.fuel_name + '</td>' +
                 '<td>' + fuel.fuel_price + '</td>' +
                 '<td>' + fuel.fuel_unit + '</td>' +
-                '<td>' + editButton + ' ' + deleteButton + '</td>' +
+                //'<td>' + editButton + ' ' + deleteButton + '</td>' +
+                '<td>' + deleteButton + '</td>' +
                 '</tr>'
             );
         });

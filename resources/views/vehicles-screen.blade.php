@@ -1,7 +1,11 @@
 @extends('layouts.user_type.auth')
 @section('content')
 
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
  
             <!-- Content Wrapper -->
@@ -131,12 +135,13 @@ function displayFuelData(VehicleData) {
    
     $.each(VehicleData, function (index, fuel) {
         var deleteButton = '<button class="btn btn-danger btn-sm delete-fuel" data-id="' + fuel.id + '">Delete</button>';
-         var editButton = '<button class="btn btn-primary btn-sm edit-fuel" data-id="' + fuel.id + '" data-name="' + fuel.fuel_name + '" data-price="' + fuel.fuel_price + '" data-unit="' + fuel.fuel_unit + '" data-toggle="modal" data-target="#editFuelModal">Edit</button>';
+        // var editButton = '<button class="btn btn-primary btn-sm edit-fuel" data-id="' + fuel.id + '" data-name="' + fuel.fuel_name + '" data-price="' + fuel.fuel_price + '" data-unit="' + fuel.fuel_unit + '" data-toggle="modal" data-target="#editFuelModal">Edit</button>';
         $('#fuelDataTable tbody').append(
             '<tr>' +
             '<td>' + fuel.vehicle_name + '</td>' +
             '<td>' + fuel.vehicle_mileage + '</td>' +
-            '<td>' + editButton + ' ' + deleteButton + '</td>' +
+           // '<td>' + editButton + ' ' + deleteButton + '</td>' +
+            '<td>' + deleteButton + '</td>' +
             '</tr>'
         );
     });

@@ -13,28 +13,31 @@ class EmailController extends Controller
     public function sendEmail(Request $request)
     {
 
-        $collection_address = $request->input('location');
-        $delivery_address = $request->input('delivery_address');
-        $vehicle = $request->input('vehicle');
-        $fuel_rate = $request->input('fuel_rate');
-        $weight = $request->input('weight');
-        $deliveryRegionCost = $request->input('deliveryRegionCost');
-        $one_off_fee = $request->input('one_off_fee');
-        $distance = $request->get('total_distance');
-        $regionName  = $request->get('region_name');
-        $fuelName    = $request->get('fuel_name');
-        $vehicleName = $request->get('vehicle_name');
-        $no_of_items = $request->get('no_of_items');
+        $collectionAddress = $request->get('collection_address');
+        $deliveryAddress   = $request->get('delivery_address');
+        $vehicle           = $request->get('vehicle_name');
+        $fuel              = $request->get('fuel');
+        $weight            = $request->get('weight');
+        $deliveryRegion    = $request->get('delivery_region');
+        $oneOfFee          = $request->get('one_off_fee');
+        $distance          = $request->get('distance');
+        $regionName        = $request->get('delivery_region');
+        $fuelName          = $request->get('fuel');
+        $vehicleName       = $request->get('vehicle_name');
+        $noOfItems         = $request->get('number_of_items');
+        $customerName      = $request->get('customer_name');
+        $customerEmail     = $request->get('customer_phone');
+        $customerPhone     = $request->get('customer_email');
+
 
         $emailMessage = "
-
-            <p><strong>Collection Address:</strong> $collection_address</p>
-            <p><strong>Delivery Address:</strong> $delivery_address</p>
+            <p><strong>Collection Address:</strong> $collectionAddress</p>
+            <p><strong>Delivery Address:</strong> $deliveryAddress</p>
             <p><strong>Vehicle:</strong> $vehicle</p>
-            <p><strong>Fuel Rate:</strong> $fuel_rate</p>
+            <p><strong>Fuel Rate:</strong> $fuel</p>
             <p><strong>Weight:</strong> $weight</p>
-            <p><strong>Delivery Region Cost:</strong> $deliveryRegionCost</p>
-            <p><strong>One-off Fee:</strong> $one_off_fee</p>
+            <p><strong>Delivery Region:</strong> $deliveryRegion</p>
+            <p><strong>One-off Fee:</strong> $oneOfFee</p>
             <br>
             <hr>
             <p><strong>Company Name:</strong> UEFARUK LTD.INTe</p>
@@ -43,25 +46,27 @@ class EmailController extends Controller
             <br>
         ";
 
-
         try {
 
             DeliveryRequest::create([
-                 "collection_address" => $collection_address,
-                 "delivery_address" => $delivery_address,
-                 "one_off_fee" => $one_off_fee,
-                 "total_miles" => $distance,
-                 "delivery_region" => $regionName,
-                 "vehicle" => $vehicleName,
-                 "fuel" => $fuelName,
-                 "delivery_weight" => $weight,
-                 "no_of_items" => $no_of_items,
+                 "collection_address" => $collectionAddress,
+                 "delivery_address"   => $deliveryAddress,
+                 "one_off_fee"        => $oneOfFee,
+                 "total_miles"        => $distance,
+                 "delivery_region"    => $regionName,
+                 "vehicle"            => $vehicleName,
+                 "fuel"               => $fuelName,
+                 "delivery_weight"    => $weight,
+                 "no_of_items"        => $noOfItems,
+                 "customer_name"      => $customerName,
+                 "customer_phone"     => $customerEmail,
+                 "customer_email"     => $customerPhone,
             ]);
 
             // Send email
 //            Mail::to('uefaruk@gmail.com')->send(new QuoteDetailsEmail($emailMessage));
 
-//            return response()->json(['success' => true, "message" => 'Email sent successfully']);
+            return response()->json(['success' => true, "message" => 'Email sent successfully']);
 
         } catch (\Exception $e) {
 

@@ -7,7 +7,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\dashboard\FuelController;
-use App\Http\Controllers\dashboard\vehicleController;
+use App\Http\Controllers\dashboard\VehicleController;
 use App\Http\Controllers\Email\EmailController;
 use App\Http\Controllers\Google_Api\GoogleMapsController;
 use App\Http\Controllers\Web_pages\WebHomeController;
@@ -87,8 +87,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/get_fuel',[FuelController::class,'getFuelData']);
 
 
-	Route::post('/add_vehicles',[vehicleController::class,'Vehicles_store']);
-	Route::get('/getVehicleData',[vehicleController::class,'GetVehicleData']);
+	Route::post('/add_vehicles',[VehicleController::class,'Vehicles_store']);
+	Route::get('/getVehicleData',[VehicleController::class,'GetVehicleData']);
 
     Route::get('/login', function () {
         return view('dashboard');
@@ -133,8 +133,30 @@ Route::post('/send-email', [EmailController::class, 'sendEmail']);
 Route::delete('/delete_fuel/{id}', [FuelController::class, 'destroy'])->name('fuel.delete');
 Route::put('/update_fuel/{id}', [FuelController::class, 'update_fuel'])->name('update_fuel');
 //Delete VehicleData
-Route::delete('/delete_vehicle/{id}', [vehicleController::class, 'destroy'])->name('fuel.delete');
+Route::delete('/delete_vehicle/{id}', [VehicleController::class, 'destroy'])->name('fuel.delete');
 // Calculate Deliviry cost
 
 
 Route::post('/calc_deli_cost',[Calculate_Delivery_Cost::class,'DeliveryCalculation']);
+
+Route::get('api',function (){
+
+    $data = file_get_contents('https://www.bp.com/en_gb/united-kingdom/home/fuelprices/fuel_prices_data.json');
+
+    $decodedData = json_decode($data);
+
+    $data = collect($decodedData->stations);
+
+    $fuelObjects = $data->sortByDesc(function ($item) {
+        return count((array) $item->prices);
+    })->first();
+
+    dd($fuelObjects->prices);
+    foreach($fuelObjects as $fuelCode => $price){
+        \App\Models\Admin\Fuel::where('code',$fuelCode)->update([
+           "price" => $price,
+           "updated_at_from_api" => now()
+        ]);
+    }
+
+});

@@ -110,18 +110,3 @@
     </div>
 
 @endsection
-
-@section('script')
-    <script>
-        $(function(){
-
-
-            @if(session()->has('success'))
-                toastr.success( "{{session('success') }}");
-            @elseif(session()->has('error'))
-                toastr.error( "{{ session('error') }}");
-            @endif
-
-        });
-    </script>
-@endsection

@@ -132,7 +132,7 @@ function displayFuelData(VehicleData) {
         var deleteButton = '<button class="btn btn-danger btn-sm delete-fuel" data-id="' + fuel.id + '">Delete</button>';
         // var editButton = '<button class="btn btn-primary btn-sm edit-fuel" data-id="' + fuel.id + '" data-name="' + fuel.fuel_name + '" data-price="' + fuel.fuel_price + '" data-unit="' + fuel.fuel_unit + '" data-toggle="modal" data-target="#editFuelModal">Edit</button>';
         $('#fuelDataTable tbody').append(
-            '<tr>' +
+            `<tr id="fuel-row-${fuel.id}">` +
             '<td>' + fuel.vehicle_name + '</td>' +
             '<td>' + fuel.vehicle_mileage + '</td>' +
            // '<td>' + editButton + ' ' + deleteButton + '</td>' +
@@ -155,7 +155,9 @@ function deletevehicle(fuelId) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (response) {
-            fetchVehicleData();
+
+            $('#fuel-row-2').remove();
+            toastr.success('Vehicle deleted successfully.');
         },
         error: function (xhr, status, error) {
             console.error(xhr.responseText);

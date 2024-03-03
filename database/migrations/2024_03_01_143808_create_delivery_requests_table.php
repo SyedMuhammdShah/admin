@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('fuel')->nullable();
             $table->string('delivery_weight')->nullable();
             $table->string('no_of_items')->nullable();
+            $table->string('customer_name')->nullable();
+            $table->string('customer_phone')->nullable();
+            $table->string('customer_email')->nullable();
             $table->timestamps();
         });
     }

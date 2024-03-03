@@ -19,5 +19,8 @@ class DeliveryRequest extends Model
         'fuel',
         'delivery_weight',
         'no_of_items',
+        'customer_name',
+        'customer_phone',
+        'customer_email',
     ];
 }

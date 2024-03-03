@@ -11,7 +11,8 @@
         }
     </style>
 
-    <div class="site-blocks-cover overlay" id="home" style="background-image: url( {{asset("images/hero_bg_1.jpg")}} );" data-aos="fade"
+    <div class="site-blocks-cover overlay" id="home" style="background-image: url( {{asset("images/hero_bg_1.jpg")}} );"
+         data-aos="fade"
          data-stellar-background-ratio="0.5">
         <div class="container">
             <div class="row align-items-center justify-content-center text-center">
@@ -36,7 +37,8 @@
                         <span class="icon-dollar"></span>
                     </div>
                     <h2 class="my-4 heading">Best Prices</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsum odio minima tempora animi
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsum odio minima tempora
+                        animi
                         iure.</p>
                 </div>
             </div>
@@ -49,14 +51,14 @@
                                 <div class="form-group">
                                     <label for="collection_address">Collection Address</label>
                                     <input required type="text" class="form-control btn-block" id="collection-input"
-                                        name="location" placeholder="Tower bridge london">
+                                           name="location" placeholder="Tower bridge london">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="delivery_address">Delivery Address</label>
                                     <input required type="text" class="form-control btn-block" id="delivery-input"
-                                        name="delivery_address" placeholder="St paul cathedral">
+                                           name="delivery_address" placeholder="St paul cathedral">
                                 </div>
                             </div>
                             <div class="col-md-12" id="distance-result" name="distance-result">
@@ -70,10 +72,10 @@
                                     <!-- <input type="text" class="form-control btn-block" id="delivery_address" name="delivery_address" placeholder="Enter Name"> -->
                                     <select required class="form-control" name="vehicle">
                                         <option selected value="">Select a vehicle</option>
-                                        @foreach(\App\Models\Admin\vehiclemodel::all() as $vehicle)
+                                        @foreach(\App\Models\Admin\Vehicle::all() as $vehicle)
                                             <option value="{{$vehicle->vehicle_mileage}}"> {{$vehicle->vehicle_name}} </option>
                                         @endforeach
-{{--                                        <option value="20.0">Cyber Truck (20.0m)</option>--}}
+                                        {{--                                        <option value="20.0">Cyber Truck (20.0m)</option>--}}
                                     </select>
                                 </div>
                             </div>
@@ -83,12 +85,12 @@
                                     <!-- <input type="text" class="form-control btn-block" id="delivery_address" name="delivery_address" placeholder="Enter Name"> -->
                                     <select required class="form-control" name="fuel_rate">
                                         <option value="" selected disabled>Select fuel rate</option>
-                                        @foreach(\App\Models\Admin\fuelmodel::all() as $fuel)
+                                        @foreach(\App\Models\Admin\fuel::all() as $fuel)
                                             <option value="{{$fuel->fuel_price}}">{{$fuel->fuel_name}}</option>
                                         @endforeach
-{{--                                        <option value="6.3535">Unleaded 6.3/gal</option>--}}
-{{--                                        <option value="6.9902">Super Unleaded 6.9/gal</option>--}}
-{{--                                        <option value="7.5505">Premium Diesel 7.5/gal</option>--}}
+                                        {{--                                        <option value="6.3535">Unleaded 6.3/gal</option>--}}
+                                        {{--                                        <option value="6.9902">Super Unleaded 6.9/gal</option>--}}
+                                        {{--                                        <option value="7.5505">Premium Diesel 7.5/gal</option>--}}
                                     </select>
                                 </div>
                             </div>
@@ -96,7 +98,7 @@
                                 <div class="form-group">
                                     <label for="weight">Delivery weight(KG)</label>
                                     <input type="text" class="form-control btn-block" id="weight" name="weight"
-                                        placeholder="49.2 KG">
+                                           placeholder="49.2 KG">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -107,9 +109,9 @@
                                         @foreach(\App\Models\Admin\DeliveryRegion::all() as $region)
                                             <option value="{{$region->one_off_fee}}">{{$region->region}}</option>
                                         @endforeach
-{{--                                        <option value="7.99">inside M25</option>--}}
-{{--                                        <option value="8.99">Outside M25</option>--}}
-{{--                                        <option value="82.34">European Delivery</option>--}}
+                                        {{--                                        <option value="7.99">inside M25</option>--}}
+                                        {{--                                        <option value="8.99">Outside M25</option>--}}
+                                        {{--                                        <option value="82.34">European Delivery</option>--}}
                                     </select>
                                 </div>
                             </div>
@@ -117,7 +119,7 @@
                                 <div class="form-group">
                                     <label for="oneOffFee">One off fee</label>
                                     <input type="text" readonly class="form-control btn-block" id="oneOffFee"
-                                        name="one_off_fee" placeholder="£7.99">
+                                           name="one_off_fee" placeholder="£7.99">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -147,7 +149,7 @@
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary text-white py-2 px-4 btn-block" id="#myModal"
-                                value="Calculate Cost">
+                                   value="Calculate Cost">
                         </div>
                     </form>
                 </div>
@@ -158,7 +160,8 @@
                         <span class="icon-phone"></span>
                     </div>
                     <h2 class="my-4 heading">24/7 Support</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsum odio minima tempora animi
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ipsum odio minima tempora
+                        animi
                         iure.</p>
                 </div>
             </div>
@@ -175,10 +178,14 @@
                     <div class="text-left pb-1 border-primary mb-4">
                         <h2 class="text-primary">About Us</h2>
                     </div>
-                    <p>Welcome to courier service we can deliver packages from home & business to destinations within Europe
-                        and the United Kingdom over 24h a day till they arrive at destination. You are welcome to specify
-                        date and time convenient to you. We can arrange full vat receipts also dedicate time to explain our
-                        policies please feel free to use website for your own discretion thank you for taking your time to
+                    <p>Welcome to courier service we can deliver packages from home & business to destinations within
+                        Europe
+                        and the United Kingdom over 24h a day till they arrive at destination. You are welcome to
+                        specify
+                        date and time convenient to you. We can arrange full vat receipts also dedicate time to explain
+                        our
+                        policies please feel free to use website for your own discretion thank you for taking your time
+                        to
                         read our manifesto. </p>
                     {{-- <p class="mb-5">Error minus sint nobis dolor laborum architecto, quaerat. Voluptatum porro expedita
                         labore esse velit veniam laborum quo obcaecati similique iusto delectus quasi!</p> --}}
@@ -187,7 +194,7 @@
                         <div class="col-md-12 mb-md-5 mb-0 col-lg-6">
                             <div class="unit-4">
                                 <div class="unit-4-icon mb-3 mr-4"><span
-                                        class="text-primary flaticon-frontal-truck"></span></div>
+                                            class="text-primary flaticon-frontal-truck"></span></div>
                                 <div>
                                     <h3>Ground Shipping</h3>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quis.</p>
@@ -234,7 +241,8 @@
                 </div>
                 <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
                     <div class="unit-4 d-flex">
-                        <div class="unit-4-icon mr-4"><span class="text-primary flaticon-sea-ship-with-containers"></span>
+                        <div class="unit-4-icon mr-4"><span
+                                    class="text-primary flaticon-sea-ship-with-containers"></span>
                         </div>
                         <div>
                             <h3>Ocean Freight</h3>
@@ -341,9 +349,9 @@
                 <div class="col-md-12">
                     <div class="p-4 mb-3 bg-white">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2477.30990056128!2d-0.07964800000000001!3d51.6175321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761fc097d76953%3A0x327ff174837a2498!2sUEFARUK%20LTD.INT!5e0!3m2!1sen!2sae!4v1707760606617!5m2!1sen!2sae"
-                            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2477.30990056128!2d-0.07964800000000001!3d51.6175321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761fc097d76953%3A0x327ff174837a2498!2sUEFARUK%20LTD.INT!5e0!3m2!1sen!2sae!4v1707760606617!5m2!1sen!2sae"
+                                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
                     </div>
                 </div>
@@ -384,14 +392,14 @@
                                     <div class="col-md-12">
                                         <label class="text-black" for="message">Message</label>
                                         <textarea name="message" id="message" cols="30" rows="7" class="form-control"
-                                            placeholder="Write your notes or questions here..."></textarea>
+                                                  placeholder="Write your notes or questions here..."></textarea>
                                     </div>
                                 </div>
 
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <input type="submit" value="Send Message"
-                                            class="btn btn-primary py-2 px-4 text-white">
+                                               class="btn btn-primary py-2 px-4 text-white">
                                     </div>
                                 </div>
 
@@ -421,13 +429,13 @@
                         <div class="col-md-12">
                             <div class="p-4 mb-3 bg-white">
                                 <h2> Opening Hours: </h2>
-                                <p class="mb-0"> <span class="font-weight-bold"> Mon: </span> 9:00 am – 5:00 pm </p>
-                                <p class="mb-0"> <span class="font-weight-bold"> Tue: </span> 9:00 am – 5:00 pm </p>
-                                <p class="mb-0"> <span class="font-weight-bold"> Wed: </span> Open 24 hours </p>
-                                <p class="mb-0"> <span class="font-weight-bold"> Thu: </span> Open 24 hours </p>
-                                <p class="mb-0"> <span class="font-weight-bold"> Fri: </span> Open 24 hours </p>
-                                <p class="mb-0"> <span class="font-weight-bold"> Sat: </span> 9:00 am – 11:00 pm </p>
-                                <p class="mb-0"> <span class="font-weight-bold"> Sun: </span> 9:00 am – 11:00 pm </p>
+                                <p class="mb-0"><span class="font-weight-bold"> Mon: </span> 9:00 am – 5:00 pm </p>
+                                <p class="mb-0"><span class="font-weight-bold"> Tue: </span> 9:00 am – 5:00 pm </p>
+                                <p class="mb-0"><span class="font-weight-bold"> Wed: </span> Open 24 hours </p>
+                                <p class="mb-0"><span class="font-weight-bold"> Thu: </span> Open 24 hours </p>
+                                <p class="mb-0"><span class="font-weight-bold"> Fri: </span> Open 24 hours </p>
+                                <p class="mb-0"><span class="font-weight-bold"> Sat: </span> 9:00 am – 11:00 pm </p>
+                                <p class="mb-0"><span class="font-weight-bold"> Sun: </span> 9:00 am – 11:00 pm </p>
 
                             </div>
                         </div>
@@ -438,20 +446,46 @@
     </div>
     <!-- Add this div for the modal -->
     <div class="modal show fadein fade-in" id="quoteModal" tabindex="-1" role="dialog"
-        aria-labelledby="quoteModalLabel" aria-hidden="true">
+         aria-labelledby="quoteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title text-center" id="quoteModalLabel">Your Quote Details</h5>
                     <button type="button" class="close text-white" id="close-model" data-dismiss="modal"
-                        aria-label="Close">
+                            aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <!-- Quote details will be dynamically inserted here -->
-                    <div id="quoteDetails">
-                        <!-- Your quote details will be dynamically inserted here -->
+                    <div>
+                        <div id="quoteDetails">
+                         </div>
+
+                        <form method="post" class="delivery-request-form">
+                            <input type="hidden" name="collection_address"/>
+                            <input type="hidden" name="delivery_address"/>
+                            <input type="hidden" name="distance"/>
+                            <input type="hidden" name="fuel"/>
+                            <input type="hidden" name="vehicle_name"/>
+                            <input type="hidden" name="delivery_region"/>
+                            <input type="hidden" name="number_of_items"/>
+                            <input type="hidden" name="total_cost"/>
+                            <input type="hidden" name="weight"/>
+
+                            <label>
+                                <strong>Name</strong>
+                                <input required type="text" name="customer_name" class="form-control"/>
+                            </label>
+                            <label>
+                                <strong>Phone</strong>
+                                <input required name="customer_phone" type="text" class="form-control"/>
+                            </label>
+                            <label class="w-100">
+                                <strong>Email</strong>
+                                <input required type="text" name="customer_email" class="form-control"/>
+                            </label>
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -459,10 +493,10 @@
                         Close
                     </button>
 
-                    <button type="submit" class="btn btn-primary text-white" id="submit-request">
+                    <button type="submit" form="delivery-request-form" class="btn btn-primary text-white" id="submit-request">
                         Submit Request
                         <div class="spinner-border spinner-border-sm d-none" id="submit-request-btn-spinner"
-                            role="status">
+                             role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
                     </button>
@@ -494,11 +528,10 @@
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
 
 
-
-            $('#myModal').on('shown.bs.modal', function() {
+            $('#myModal').on('shown.bs.modal', function () {
                 $('#myInput').trigger('focus')
             })
 
@@ -518,7 +551,7 @@
                         destinations: [destination],
                         travelMode: 'DRIVING'
                     },
-                    function(response, status) {
+                    function (response, status) {
                         if (status === 'OK') {
 
                             console.log('GEO=> ', response.rows[0].elements[0]);
@@ -535,7 +568,7 @@
             }
 
             // Event listener for input fields
-            autocompleteCollection.addListener('place_changed', function() {
+            autocompleteCollection.addListener('place_changed', function () {
                 var place = autocompleteCollection.getPlace();
                 if (!place.geometry) {
                     window.alert("Autocomplete's returned place contains no geometry");
@@ -544,7 +577,7 @@
                 calculateDistance(place.formatted_address, deliveryInput.value, distanceResult);
             });
 
-            autocompleteDelivery.addListener('place_changed', function() {
+            autocompleteDelivery.addListener('place_changed', function () {
                 var place = autocompleteDelivery.getPlace();
                 if (!place.geometry) {
                     window.alert("Autocomplete's returned place contains no geometry");
@@ -554,9 +587,9 @@
             });
         });
 
-        $(document).ready(function() {
+        $(document).ready(function () {
 
-            $('select[name="vehicle"]').on('change', function() {
+            $('select[name="vehicle"]').on('change', function () {
 
                 const vehicleName = $('select[name="vehicle"] option:selected').text();
 
@@ -564,7 +597,7 @@
 
             });
 
-            $('select[name="fuel_rate"]').on('change', function() {
+            $('select[name="fuel_rate"]').on('change', function () {
 
                 const fuelName = $('select[name="fuel_rate"] option:selected').text();
 
@@ -572,7 +605,7 @@
 
             });
 
-            $('select[name="deliveryRegionCost"]').on('change', function() {
+            $('select[name="deliveryRegionCost"]').on('change', function () {
 
                 const regionName = $('select[name="deliveryRegionCost"] option:selected').text();
 
@@ -628,8 +661,9 @@
 
                 return totalCost.toFixed(2); // Round to 2 decimal places
             }
+
             $('#close-model').modal('hide');
-            $('#city-form').submit(function(event) {
+            $('#city-form').submit(function (event) {
                 event.preventDefault(); // Prevent form submission
 
                 // Retrieve the distance value from the text content
@@ -660,7 +694,7 @@
                     vehicleMPG,
                     fuelRate,
                     deliveryRegionCost,
-                    ( parseInt(noOfItems)  * 8.99)
+                    (parseInt(noOfItems) * 8.99)
                 );
                 console.log('Total cost:', totalCost); // Log total cost
 
@@ -679,6 +713,20 @@
                     <p > <span style="font-weight:bold"> Total Cost:</span> ${totalCost}</p>
                 `;
 
+                const fuel = $('select[name=fuel_rate] option:selected').text();
+                const deliveryRegion = $('select[name=deliveryRegionCost] option:selected').text();
+                const vehicle = $('select[name=vehicle] option:selected').text();
+                const weight = $('input[name=weight]').val();
+
+                $('.delivery-request-form input[name=weight]').val(weight);
+                $('.delivery-request-form input[name=collection_address]').val(collectionCity);
+                $('.delivery-request-form input[name=delivery_address]').val(deliveryCity);
+                $('.delivery-request-form input[name=distance]').val(distance);
+                $('.delivery-request-form input[name=fuel]').val(fuel);
+                $('.delivery-request-form input[name=vehicle_name]').val(vehicle);
+                $('.delivery-request-form input[name=delivery_region]').val(deliveryRegion);
+                $('.delivery-request-form input[name=number_of_items]').val(noOfItems);
+                $('.delivery-request-form input[name=total_cost]').val(totalCost);
                 // no_of_items
 
                 $('input[name=total_distance]').val(distance);
@@ -692,9 +740,9 @@
         });
 
 
-        $('#submit-request').on('click', function() {
+        $('#submit-request').on('click', function () {
 
-            var formData = $('#city-form').serialize();
+            var formData = $('.delivery-request-form').serialize();
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
             $clickedButtonDom = $(this);
@@ -706,12 +754,12 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                beforeSend: function() {
+                beforeSend: function () {
 
                     $clickedButtonDom.addClass('disabled');
                     $('#submit-request-btn-spinner').removeClass('d-none');
                 },
-                success: function(response) {
+                success: function (response) {
 
                     setTimeout(() => {
                         location.reload();
@@ -727,7 +775,7 @@
                     // }, 3000);
                     // alert("Email sent successfully.");
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
 
                     $('#submit-request-btn-spinner').addClass('d-none');
                     $clickedButtonDom.removeClass('disabled');
@@ -740,11 +788,11 @@
 
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const navLinks = document.querySelectorAll('header nav ul li a');
 
-            navLinks.forEach(function(navLink) {
-                navLink.addEventListener('click', function(event) {
+            navLinks.forEach(function (navLink) {
+                navLink.addEventListener('click', function (event) {
                     event.preventDefault();
 
                     const targetId = this.getAttribute('href').substring(1);
@@ -760,33 +808,6 @@
             });
         });
 
-        // Save Quation
-        $(document).ready(function() {
-            $('#submit-request').click(function(e) {
-                e.preventDefault();
-
-                // Serialize form data
-                var formData = $('#city-form').serialize();
-                // Send AJAX request
-                $.ajax({
-                    type: 'POST',
-                    url: '/calc_deli_cost',
-                    data: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        $('#quoteModal').modal('hide');
-                        // Handle success action, like showing a success message
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText, error);
-                        // Handle error action, like showing an error message
-                    }
-                });
-            });
-        });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endsection

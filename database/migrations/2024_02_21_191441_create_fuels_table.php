@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fuelmodel', function (Blueprint $table) {
+        Schema::create('fuels', function (Blueprint $table) {
             $table->id();
+            $table->string('fuel_code');
             $table->string('fuel_name');
             $table->string('fuel_price');
-            $table->string('fuel_unit'); 
-            $table->timestamps(); 
+            $table->string('fuel_unit');
+            $table->timestamp('updated_at_from_api')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

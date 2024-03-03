@@ -33,6 +33,32 @@
                             <div class="card-body">
                                 <form class="user" method="POST" action="/add_fuel">
                                     @csrf
+
+                                    <div class="form-group">
+                                        <select class="form-control" id="fuel_code" name="fuel_code">
+                                            <option selected value="">Select fuel code</option>
+                                            <option
+                                                value="E5"
+                                            >
+                                                E5
+                                            </option>
+                                            <option
+                                                value="E10"
+                                            >
+                                                E10
+                                            </option>
+                                            <option
+                                                value="B7"
+                                            >
+                                                B7
+                                            </option>
+                                            <option
+                                                value="SDV"
+                                            >
+                                                SDV
+                                            </option>
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <input class="form-control form-control-user" id="fuel_name" name="fuel_name"
                                             aria-describedby="emailHelp" placeholder="Enter Fuel Name">
@@ -43,10 +69,22 @@
                                     </div>
                                     <div class="form-group">
                                         <select class="form-control" id="fuel_unit" name="fuel_unit">
-                                            <option class="form-control" id="fuel_unit" name="fuel_unit" value="Gallon">
-                                                Gallon</option>
-                                            <option class="form-control" id="fuel_unit" name="fuel_unit" value="Liter">
-                                                Liter</option>
+                                            <option
+                                                selected
+                                                value=""
+                                            >
+                                                Select Unit
+                                            </option>
+                                            <option
+                                                value="Gallon"
+                                            >
+                                                Gallon
+                                            </option>
+                                            <option
+                                                value="Liter"
+                                            >
+                                                Liter
+                                            </option>
                                         </select>
                                     </div>
                                     <button class="btn btn-primary btn-user btn-block">

@@ -17,7 +17,7 @@ class QuoteDetailsEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($emailMessage)
+    public function __construct($emailMessage, $subject = null)
     {
         $this->emailMessage = $emailMessage;
     }
@@ -29,7 +29,7 @@ class QuoteDetailsEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('New Quotation Request')
+        return $this->subject( $this->subject ?? 'New Quotation Request')
                     ->html($this->emailMessage);
     }
 }

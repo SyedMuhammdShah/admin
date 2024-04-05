@@ -5,7 +5,6 @@ namespace App\Http\Controllers\dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Fuel;
-use App\Models\Admin\vehiclesmodel;
 
 class FuelController extends Controller
 {
@@ -36,20 +35,20 @@ class FuelController extends Controller
       public function getFuelData()
       {
 
-          $fuelData = fuel::all();
+          $fuelData = Fuel::all();
 
 
           return response()->json(['fuelData' => $fuelData]);
       }
       public function destroy($id)
       {
-          $fuel = fuel::findOrFail($id);
+          $fuel = Fuel::findOrFail($id);
           $fuel->delete();
 
           return response()->json(['message' => 'Fuel record deleted successfully']);
       }
       public function update_fuel(Request $request){
-        $fuel = fuel::findOrFail($request->edit_fuel_id);
+        $fuel = Fuel::findOrFail($request->edit_fuel_id);
         $fuel->update([
             'fuel_name' => $request->edit_fuel_name,
             'fuel_price' => $request->edit_fuel_price,

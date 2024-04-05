@@ -9,6 +9,7 @@
             font-size: 0.75rem;
             /* Adjust font size as needed */
         }
+
     </style>
 
     <div class="site-blocks-cover overlay" id="home" style="background-image: url( {{asset("images/hero_bg_1.jpg")}} );"
@@ -85,8 +86,8 @@
                                     <!-- <input type="text" class="form-control btn-block" id="delivery_address" name="delivery_address" placeholder="Enter Name"> -->
                                     <select required class="form-control" name="fuel_rate">
                                         <option value="" selected disabled>Select fuel rate</option>
-                                        @foreach(\App\Models\Admin\fuel::all() as $fuel)
-                                            <option value="{{$fuel->fuel_price}}">{{$fuel->fuel_name}}</option>
+                                        @foreach(\App\Models\Admin\Fuel::all() as $fuel)
+                                            <option value="{{$fuel->fuel_price}}">{{$fuel->fuel_name}} (₤{{$fuel->fuel_price}}/{{$fuel->fuel_unit}})</option>
                                         @endforeach
                                         {{--                                        <option value="6.3535">Unleaded 6.3/gal</option>--}}
                                         {{--                                        <option value="6.9902">Super Unleaded 6.9/gal</option>--}}
@@ -358,39 +359,39 @@
                 <div class="col-md-7">
                     <div class="row">
                         <div class="col-md-12">
-                            <form action="#" class="p-5 bg-white">
-
+                            <form action="{{route('contact.email')}}" method="post" class="p-5 bg-white">
+                                @csrf
 
                                 <div class="row form-group">
                                     <div class="col-md-6 mb-3 mb-md-0">
-                                        <label class="text-black" for="fname">First Name</label>
-                                        <input type="text" id="fname" class="form-control">
+                                        <label class="text-black required" for="fname">First Name</label>
+                                        <input type="text" id="fname" name="first_name" class="form-control">
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="text-black" for="lname">Last Name</label>
-                                        <input type="text" id="lname" class="form-control">
+                                        <label class="text-black required" for="lname">Last Name</label>
+                                        <input type="text" id="lname" name="last_name" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="row form-group">
 
                                     <div class="col-md-12">
-                                        <label class="text-black" for="email">Email</label>
-                                        <input type="email" id="email" class="form-control">
+                                        <label class="text-black required" for="email">Email</label>
+                                        <input type="email" id="email" required name="email" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="row form-group">
 
                                     <div class="col-md-12">
-                                        <label class="text-black" for="subject">Subject</label>
-                                        <input type="subject" id="subject" class="form-control">
+                                        <label class="text-black required" for="subject">Subject</label>
+                                        <input type="subject" id="subject" name="subject" required class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="row form-group">
                                     <div class="col-md-12">
-                                        <label class="text-black" for="message">Message</label>
+                                        <label class="text-black required" for="message">Message</label>
                                         <textarea name="message" id="message" cols="30" rows="7" class="form-control"
                                                   placeholder="Write your notes or questions here..."></textarea>
                                     </div>
@@ -530,6 +531,11 @@
     <script>
         $(document).ready(function () {
 
+            @if(session()->get('success'))
+                toastr.success('{{session('success')}}');
+            @elseif (session('error'))
+                toastr.error('{{session('error')}}');
+            @endif
 
             $('#myModal').on('shown.bs.modal', function () {
                 $('#myInput').trigger('focus')

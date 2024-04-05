@@ -26,8 +26,8 @@ class EmailController extends Controller
         $vehicleName       = $request->get('vehicle_name');
         $noOfItems         = $request->get('number_of_items');
         $customerName      = $request->get('customer_name');
-        $customerEmail     = $request->get('customer_phone');
-        $customerPhone     = $request->get('customer_email');
+        $customerEmail     = $request->get('customer_email');
+        $customerPhone     = $request->get('customer_phone');
 
 
         $emailMessage = "
@@ -37,7 +37,9 @@ class EmailController extends Controller
             <p><strong>Fuel Rate:</strong> $fuel</p>
             <p><strong>Weight:</strong> $weight</p>
             <p><strong>Delivery Region:</strong> $deliveryRegion</p>
-            <p><strong>One-off Fee:</strong> $oneOfFee</p>
+            <p><strong>Customer Name:</strong> $customerName</p>
+            <p><strong>Customer Email:</strong> $customerEmail</p>
+            <p><strong>Customer Phone:</strong> $customerPhone</p>
             <br>
             <hr>
             <p><strong>Company Name:</strong> UEFARUK LTD.INTe</p>
@@ -64,7 +66,8 @@ class EmailController extends Controller
             ]);
 
             // Send email
-//            Mail::to('uefaruk@gmail.com')->send(new QuoteDetailsEmail($emailMessage));
+            Mail::to('uefaruk@gmail.com')->send(new QuoteDetailsEmail($emailMessage));
+//            Mail::to('hamzaajaz251@gmail.com')->send(new QuoteDetailsEmail($emailMessage));
 
             return response()->json(['success' => true, "message" => 'Email sent successfully']);
 
@@ -74,5 +77,35 @@ class EmailController extends Controller
             return response()->json(['error' => true, "message" => "Server error"], 500);
         }
 
+    }
+
+    public function sendContactEmail(Request $request){
+
+        try {
+            //code...
+            $firstName = $request->get('first_name');
+            $lastName  = $request->get('last_name');
+            $email     = $request->get('email');
+            $subject   = $request->get('subject');
+            $message   = $request->get('message');
+
+            $emailMessage = "
+                <p><strong>First Name:</strong> $firstName</p>
+                <p><strong>Last Name:</strong> $lastName</p>
+                <p><strong>Email:</strong> $email</p>
+                <p><strong>Subject:</strong> $subject</p>
+                <hr>
+                <p><strong>Message:</strong>$message</p>
+            ";
+
+            Mail::to('uefaruk@gmail.com')->send(new QuoteDetailsEmail($emailMessage));
+
+            session()->flash('success','Email sent successfully. We will contact you shortly.');
+            return redirect()->back();
+
+        } catch (\Exception $th) {
+            session()->flash('error', $th->getMessage());
+            return redirect()->back();
+        }
     }
 }

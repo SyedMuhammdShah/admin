@@ -160,3 +160,5 @@ Route::get('api',function (){
     }
 
 });
+
+Route::post('contact-email',[EmailController::class,'sendContactEmail'])->name('contact.email');

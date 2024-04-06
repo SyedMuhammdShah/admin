@@ -108,7 +108,8 @@
                                     <select required class="form-control" name="deliveryRegionCost">
                                         <option value="" selected disabled>Select region</option>
                                         @foreach(\App\Models\Admin\DeliveryRegion::all() as $region)
-                                            <option value="{{$region->one_off_fee}}">{{$region->region}}</option>
+                                            <option value="{{$region->one_off_fee}}" data-region-tax="{{$region->region_tax}}">{{$region->region}}</option>
+                                            
                                         @endforeach
                                         {{--                                        <option value="7.99">inside M25</option>--}}
                                         {{--                                        <option value="8.99">Outside M25</option>--}}
@@ -125,7 +126,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="oneOffFee">No of Items</label>
+                                    <label for="region_tax">Region Tax</label>
+                                    <input type="text" readonly class="form-control btn-block" id="region_tax"
+                                           name="region_tax" placeholder="£10">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">No of Items</label>
                                     <select class="form-control" name="no_of_items">
                                         <option selected value="">Select no of items</option>
                                         <option value="1">1</option>
@@ -614,13 +622,13 @@
             $('select[name="deliveryRegionCost"]').on('change', function () {
 
                 const regionName = $('select[name="deliveryRegionCost"] option:selected').text();
-
+                const selectedOption = $(this).find('option:selected');
                 const oneOffFee = $(this).val();
-
+                const regionTax = selectedOption.data('region-tax');
+                console.log(regionTax);
                 $('input[name=region_name]').val(regionName);
-
                 $('input[name=one_off_fee]').val(oneOffFee);
-
+                $('input[name=region_tax]').val(regiontax);
             });
 
             // Function to calculate total cost

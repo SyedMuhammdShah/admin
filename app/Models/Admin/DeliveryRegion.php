@@ -11,5 +11,6 @@ class DeliveryRegion extends \Illuminate\Database\Eloquent\Model{
     protected $fillable = [
         "one_off_fee",
         "region",
+        "region_tax",
     ];
 }

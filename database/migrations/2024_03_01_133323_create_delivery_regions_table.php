@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('region');
             $table->decimal('one_off_fee');
+            $table->string('region_tax');
             $table->softDeletes();
             $table->timestamps();
         });

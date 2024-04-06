@@ -22,7 +22,7 @@
 
                 <div class="row">
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
 
                         <!-- Circle Buttons -->
                         <div class="card shadow mb-6">
@@ -40,6 +40,7 @@
                                             placeholder="Enter Region Name"
                                             required>
                                     </div>
+                                    
                                     <div class="form-group">
                                         <input
                                             class="form-control form-control-user"
@@ -47,6 +48,15 @@
                                             aria-describedby="emailHelp"
                                             placeholder="8.99"
                                             type="text"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            class="form-control form-control-user"
+                                            name="region_tax"
+                                            aria-describedby="emailHelp"
+                                            placeholder="Enter Tax"
+                                            type="number"
                                             required>
                                     </div>
                                     <button class="btn btn-primary btn-user btn-block">
@@ -58,7 +68,7 @@
 
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-8">
 
                         <div class="card shadow mb-6">
                             <div class="card-header py-3">
@@ -71,6 +81,7 @@
                                         <th>ID</th>
                                         <th>Region Name</th>
                                         <th>Region One of Fee</th>
+                                        <th>Region Tax</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -80,6 +91,7 @@
                                             <td>{{$region->id}}</td>
                                             <td>{{$region->region}}</td>
                                             <td>{{$region->one_off_fee}}</td>
+                                            <td>{{$region->region_tax}}</td>
                                             <td>
                                                 <form method="post" action="{{route('admin.delivery-regions.destroy',['delivery_region' => $region->id])}}">
                                                     @method('DELETE')

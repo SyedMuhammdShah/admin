@@ -16,7 +16,6 @@ class DeliveryRegionController extends \App\Http\Controllers\Controller{
     }
 
     public function store(Request $request){
-
         try {
 
             if(!is_numeric($request->get('one_off_fee'))){
@@ -24,10 +23,11 @@ class DeliveryRegionController extends \App\Http\Controllers\Controller{
                 session()->flash('error', "One off fee must be an integer");
                 return redirect()->back();
             }
-
+       
             DeliveryRegion::create([
                 'one_off_fee' => $request->get('one_off_fee'),
                 'region' => $request->get('region'),
+                'region_tax' => $request->get('region_tax'),
             ]);
 
             session()->flash('success', "Delivery Region added successfully.");

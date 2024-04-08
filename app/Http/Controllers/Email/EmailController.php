@@ -28,6 +28,7 @@ class EmailController extends Controller
         $customerName      = $request->get('customer_name');
         $customerEmail     = $request->get('customer_email');
         $customerPhone     = $request->get('customer_phone');
+        $regionTax         = $request->get('region_tax');
 
 
         $emailMessage = "
@@ -63,11 +64,12 @@ class EmailController extends Controller
                  "customer_name"      => $customerName,
                  "customer_phone"     => $customerEmail,
                  "customer_email"     => $customerPhone,
+                 "region_tax"         => $regionTax,
             ]);
 
             // Send email
-            Mail::to('uefaruk@gmail.com')->send(new QuoteDetailsEmail($emailMessage));
-//            Mail::to('hamzaajaz251@gmail.com')->send(new QuoteDetailsEmail($emailMessage));
+            // Mail::to('uefaruk@gmail.com')->send(new QuoteDetailsEmail($emailMessage));
+           Mail::to('hamzaajaz251@gmail.com')->send(new QuoteDetailsEmail($emailMessage));
 
             return response()->json(['success' => true, "message" => 'Email sent successfully']);
 

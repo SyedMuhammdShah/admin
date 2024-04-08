@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('delivery_regions', function (Blueprint $table) {
-            $table->id();
-            $table->string('region');
-            $table->decimal('one_off_fee');
-            $table->softDeletes();
-            $table->timestamps();
+        Schema::table('delivery_regions', function (Blueprint $table) {
+            $table->decimal('region_tax',5,2)->nullable();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('delivery_regions');
+        Schema::table('delivery_regions', function (Blueprint $table) {
+            $table->dropColumn('region_tax');
+        });
     }
 };

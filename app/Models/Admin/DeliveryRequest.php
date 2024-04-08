@@ -22,5 +22,6 @@ class DeliveryRequest extends Model
         'customer_name',
         'customer_phone',
         'customer_email',
+        'region_tax'
     ];
 }

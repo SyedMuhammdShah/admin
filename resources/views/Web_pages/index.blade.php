@@ -109,7 +109,7 @@
                                         <option value="" selected disabled>Select region</option>
                                         @foreach(\App\Models\Admin\DeliveryRegion::all() as $region)
                                             <option value="{{$region->one_off_fee}}" data-region-tax="{{$region->region_tax}}">{{$region->region}}</option>
-                                            
+
                                         @endforeach
                                         {{--                                        <option value="7.99">inside M25</option>--}}
                                         {{--                                        <option value="8.99">Outside M25</option>--}}
@@ -625,14 +625,22 @@
                 const selectedOption = $(this).find('option:selected');
                 const oneOffFee = $(this).val();
                 const regionTax = selectedOption.data('region-tax');
-                console.log(regionTax);
                 $('input[name=region_name]').val(regionName);
                 $('input[name=one_off_fee]').val(oneOffFee);
-                $('input[name=region_tax]').val(regiontax);
+                $('input[name=region_tax]').val(regionTax);
             });
 
+            function calculateTax(totalAmount, taxPercentage) {
+                // Calculate tax amount
+                var taxAmount = (totalAmount * taxPercentage) / 100;
+                // Add tax amount to the total amount
+                var totalWithTax = totalAmount + taxAmount;
+                // Return total amount with tax
+                return totalWithTax;
+            }
+
             // Function to calculate total cost
-            function calculateTotalCost(distanceMiles, vehicleMPG, fuelRate, deliveryRegionCost, noOfItems) {
+            function calculateTotalCost(distanceMiles, vehicleMPG, fuelRate, deliveryRegionCost, noOfItems, regionTax) {
                 // Convert distance from string to float
                 console.log('Invalid distance:', distanceMiles);
                 // distance =  101.88;
@@ -670,8 +678,15 @@
                 // Calculate fuel cost
 
                 // Calculate total cost including delivery region
-                var totalCost = fuelConsumption + parseFloat(deliveryRegionCost) + noOfItems;
-                console.log('fuel totalCost: ', totalCost);
+                var subTotal = (fuelConsumption + parseFloat(deliveryRegionCost) + noOfItems);
+
+                var taxAmount = 0;
+
+                if(regionTax > 0){
+                    taxAmount = calculateTax(subTotal, regionTax);
+                }
+
+                var totalCost = subTotal + taxAmount;
 
                 return totalCost.toFixed(2); // Round to 2 decimal places
             }
@@ -701,6 +716,7 @@
                 var deliveryRegionCost = parseFloat($('select[name="deliveryRegionCost"]').val());
                 var collectionCity = $('#collection-input').val();
                 var deliveryCity = $('#delivery-input').val();
+                var regionTax = $('input[name=region_tax]').val();
                 const noOfItems = $('select[name=no_of_items]').val();
                 // Calculate total cost
                 var totalCost = calculateTotalCost(
@@ -708,7 +724,8 @@
                     vehicleMPG,
                     fuelRate,
                     deliveryRegionCost,
-                    (parseInt(noOfItems) * 8.99)
+                    (parseInt(noOfItems) * 8.99),
+                    regionTax
                 );
                 console.log('Total cost:', totalCost); // Log total cost
 
@@ -724,7 +741,8 @@
                     <p > <span style="font-weight:bold"> Fuel Rate:</span> ${fuelRate}</p>
                     <p > <span style="font-weight:bold"> Delivery Region Cost:</span> ${deliveryRegionCost}</p>
                     <p > <span style="font-weight:bold"> Number of Items:</span> ${noOfItems}</p>
-                    <p > <span style="font-weight:bold"> Total Cost:</span> ${totalCost}</p>
+                    <p > <span style="font-weight:bold"> Region Tax:</span> ${regionTax} %</p>
+                    <p > <span style="font-weight:bold"> Total Cost: £ </span> ${totalCost}</p>
                 `;
 
                 const fuel = $('select[name=fuel_rate] option:selected').text();

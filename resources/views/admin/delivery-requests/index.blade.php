@@ -41,6 +41,7 @@
                                         <th>Fuel Type</th>
                                         <th>Delivery Weight</th>
                                         <th>No of Items</th>
+                                        <th>Region Tax</th>
                                         <th>Customer Name</th>
                                         <th>Customer Email</th>
                                         <th>Customer Phone</th>
@@ -59,11 +60,12 @@
                                             <td> {{$data->fuel}} </td>
                                             <td> {{$data->delivery_weight}} </td>
                                             <td> {{$data->no_of_items}} </td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
+                                            <td>  {{ empty($data->region_tax) ? "-" : $data->region_tax."%"  }} </td>
+                                            <td> {{$data->no_of_items}} </td>
+                                            <td>{{$data->customer_name}}</td>
+                                            <td>{{$data->customer_email}}</td>
+                                            <td>{{$data->customer_phone}}</td>
                                         </tr>
-
                                     @endforeach
                                     </tbody>
                                 </table>
